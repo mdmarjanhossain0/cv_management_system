@@ -1,0 +1,187 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
+
+.m-container {
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Montserrat', sans-serif;
+}
+
+
+#register {
+    display: none;
+}
+#login_button {
+    display: none;
+}
+
+.m-container .main-card {
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 8px;
+    width: 60%;
+    height: 70vh;
+    transform: translateX(0%);
+    animation: show 0.7s;
+    position: relative;
+}
+
+.m-container .main-card .select-tab {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 20vw;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    width: 50%;
+    height: 100%;
+    background: #23384E;
+	/* background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C); */
+	/* background: linear-gradient(to right, #23384E, #002d72); */
+	background-repeat: no-repeat;
+	background-size: cover;
+    transition: transform 0.6s ease-in-out;
+    float: left;
+}
+
+.m-container .main-card .select-tab button {
+    padding: 0.5rem;
+    margin: 0.4rem;
+    border-radius: 20px;
+    border: 1px solid white;
+    outline: none;
+    color: white;
+    width: 50%;
+    font-size: 1.6rem;
+    font-size: 1.5rem;
+    background: #23384E;
+	/* background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C); */
+	/* background: linear-gradient(to right, #FF4B2B, #FF416C); */
+}
+
+.m-container .main-card .select-tab button:hover {
+    border: 2px solid white;
+    font-weight: bold;
+}
+
+
+
+
+
+.m-container .main-card .select-tab p {
+	text-align: center;
+	width: 90%;
+	transform: translateX(0);
+	transition: transform 0.6s ease-in-out;
+    font-size: 1.6rem;
+    color: white;
+}
+.main-card .login-card {
+    border-radius: 8px;
+    width: 50%;
+    height: 100%;
+    transition: transform 0.6s ease-in-out;
+    overflow-y: auto;
+}
+
+.main-card .login-card .title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 5rem;
+    /* background-color: #46C0F1; */
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    color: black;
+    font-size: 1.7rem;
+}
+
+
+.main-card .login-card .title h3 {
+    font-size: 1.5rem;
+    color: #23384E;
+}
+
+.main-card .login-card form {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    background-color: #FFFFFF;
+}
+
+.main-card .login-card form input {
+    background-color: #eee;
+	border: none;
+	padding: 12px 15px;
+	margin: 8px 0;
+}
+
+.main-card .login-card form button {
+    padding: 0.5rem;
+    margin: 0.4rem;
+    border-radius: 20px;
+    border: 0px solid white;
+    outline: none;
+    color: white;
+    font-size: 1.3rem;
+    background: #23384E;
+	/* background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C); */
+	/* background: linear-gradient(to right, #FF4B2B, #FF416C); */
+
+
+}
+
+
+.main-card .login-card form button:hover {
+    font-weight: bold;
+}
+.main-card .login-card form a {
+    text-align: center;
+    text-decoration: none;
+    padding: 1rem;
+}
+
+@keyframes show {
+	0%, 49.99% {
+		opacity: 0;
+		z-index: 1;
+	}
+	
+	50%, 100% {
+		opacity: 1;
+		z-index: 5;
+	}
+}
+
+
+
+
+
+@media only screen and (max-width: 768px) {
+
+    .m-container .main-card {
+        width: 90%;
+    }
+}
+
+
+@media only screen and (max-width: 576px) {
+    .m-container .main-card {
+        flex-direction: column;
+        height: 70vh;
+    }
+
+    .m-container .main-card .login-card {
+        width: 100%;
+    }
+
+    .m-container .main-card .select-tab {
+        width: 100%;
+        max-height: 35vh;
+        border-radius: 8px;
+    }
+}

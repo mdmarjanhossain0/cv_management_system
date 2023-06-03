@@ -1,0 +1,135 @@
+.main-container {
+    display: flex;
+    background: #F0F1F3;
+}
+
+.main-container .basic-info {
+    width: 25%;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main-container .basic-info img {
+    width: 10rem;
+    height: 10rem;
+    border-radius: 50%;
+}
+
+
+.main-container .basic-info h3 {
+    border-bottom: 3px solid #f9dd94;
+}
+
+
+
+.main-container .basic-info p {
+    font-size: 0.9rem;
+}
+
+
+.main-container .resume-info {
+    width: 75%;
+    padding: 1rem;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.main-container .resume-info div .header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0px;
+    margin-bottom: 0px;
+    padding-right: 1rem;
+    align-items: center;
+}
+.main-container .resume-info div .header section {
+    background: #F0F1F3;
+    padding: 0.3rem;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.main-container .resume-info div .header section:hover {
+    border: 1px solid gray;
+}
+
+.main-container .resume-info .sub-container {
+    margin-bottom: 2.5rem;
+    width: 100%;
+    overflow: hidden;
+}
+
+.main-container .resume-info .sub-container  h2 {
+    font-size: 1.4rem;
+    display: inline;
+    border-bottom: 3px solid #f9dd94;
+    color: #002d72;
+}
+
+.main-container .resume-info .sub-container  h2::after {
+    content: ":-";
+}
+
+.main-container .resume-info .sub-container .table-container {
+    width: 100%;
+    overflow-x: auto !important;
+    margin-top: 0.5rem;
+}
+
+
+.main-container .resume-info .sub-container .table-container table td {
+    max-width: 200px;
+    font-size: 0.8rem;
+}
+table td,
+table th {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    padding: 3px !important;
+}
+
+thead th {
+    color: #fff;
+}
+
+.card {
+    border-radius: .5rem;
+}
+
+.table-scroll {
+    border-radius: .5rem;
+}
+
+.table-scroll table thead th {
+    font-size: 1.25rem;
+}
+
+
+@media only screen and (max-width: 992px) {}
+
+@media only screen and (max-width: 768px) {
+    .main-container {
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .main-container .basic-info {
+        width: 100%;
+        border-bottom: 1px solid gray;
+    }
+
+    .main-container .basic-info img {
+        width: 30%;
+    }
+
+    .main-container .resume-info {
+        overflow-x: auto;
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 578px) {}
