@@ -1,0 +1,295 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing: 0;
+}
+
+body{
+    background: rgb(0, 0, 0);
+    font-family: sans-serif;    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+.container
+{
+    position: relative;
+    margin:20%;
+    background: rgb(244, 247, 253);
+    width: 100%;
+    height:900px;
+    display: grid;
+    grid-template-columns: 1fr 1.8fr;
+
+}
+.left
+{
+    background: rgb(17, 17, 17);
+    position: relative;
+    color: white;
+    padding: 7px;
+}
+.right
+{
+    background-color: rgb(233, 223, 230);
+}
+.image
+{
+    position: relative;
+    margin: auto;
+    width: 190px;
+    height: 190px;
+    padding-bottom: 10px;
+
+}
+.profile_box
+{
+    position:relative;
+    display:flex;
+    flex-direction: column;
+border-bottom: 1px solid rgb(214, 201, 191);
+padding-bottom: 5px ;
+
+
+}
+.image img
+{
+
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+
+}
+.profile_box h2
+{
+    font-size: .5cm;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight:bold ;
+    color: rgb(255, 255, 255);
+    font-family: sans-serif;
+}
+
+.title{
+    color: rgb(255, 255, 255);
+    text-transform: uppercase;
+    padding: 5px 5px;
+    letter-spacing: 1px;
+    font-size: 22px;
+
+
+    
+}
+.contact
+{
+    padding-top: 20px;
+    padding-left: 2px;
+}
+.contact span
+{
+vertical-align: 3px;
+font-size: medium;
+}
+.personal :hover
+{
+    color: rgb(182, 78, 130);
+}
+
+.contact ul li
+{
+    list-style: none;
+    margin: 5px 0;
+    padding-left: 5px;
+}
+.icon 
+
+{
+    width: 30px;
+    color: rgb(214, 201, 191);
+    
+    
+
+}
+
+.year 
+{
+    font-size: medium;
+    padding-bottom: 1px;
+    font: weight 10px;
+    color:rgb(214, 201, 191);
+    text-shadow: 0 0 3px #74513b}
+.degree
+{
+    font-size: medium;
+    padding-bottom: 5px;
+font-weight:300;
+}
+
+.percent
+{
+    display: block;
+    width: 100%;
+    height: 6px;
+    background: rgb(214, 201, 191);
+}
+
+.percent div{
+background: rgb(194, 137, 165);
+height: 100%;
+}
+
+.r_divs
+{
+    padding-bottom: 10px;
+    padding-left: 0px;
+    padding-top: 33px;
+    
+}
+.name
+{
+    background-color: rgb(0, 0, 0);
+    padding-top: 10px;
+
+}
+/*sanjukta sarker*/
+.l1
+{
+    padding-bottom: 5px;
+    padding-top: 10px;
+    font-size: 35px;
+    text-transform: uppercase;
+   color: #e6d8df;
+   text-align: center;
+border-spacing: 0cap;   
+font-weight: 700;
+
+
+
+}
+/*web developer*/
+
+.l2
+{
+    font-size: 20px;
+    padding-bottom: 20px;
+    text-align: center;
+    color: #dbd1d6;
+    text-shadow: 0 0 3px #5a2d54;
+
+
+    
+}
+.dwnld
+{
+    text-decoration: underline;
+    text-decoration-color: #ca9b9b;
+    font-size: 12px;
+    text-align: end;
+}
+.dwnld a:link
+
+{
+    color:#ca9b9b;
+    text-decoration: none;
+}
+.dwnld a:visited
+{
+   color: #a3a3a3;
+}
+.dwnld a:hover
+{
+color:#dbd1d6
+}
+/*abput me-skill (titles)*/
+.title1
+{
+    color: rgb(214, 201, 191);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 25px;
+    font: weight ;
+    background-color: #070707;
+    margin-right: 53px;
+
+}
+.about_me
+{
+    padding-top: 10px;
+    font-size: 15px;
+    font-weight: 300;
+    color: rgb(75, 74, 74);
+    font-family:'Trebuchet MS';
+}
+
+.work
+{
+    display:flex;
+    padding-top: 10px;
+
+    
+
+}
+.w_place
+{
+    padding-top: 5px;
+    font-size: 18px;
+    font-weight: 500;
+    font-family: 'Trebuchet MS';
+
+}
+.w_place :nth-child(even)
+{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.w_descrip
+{
+    font-size: medium;
+    font-weight: 300;
+    padding-left:30px ;
+    padding-top: 7px;
+}
+.w_descrip  :nth-child(even)
+{
+    padding-top: 15px;
+    padding-bottom: 15px;
+
+
+}
+
+.awards 
+{
+    font-size: 20px;
+    font-weight: 300;
+    padding-top: 10px;
+} 
+.achieve
+{
+    font-weight: 600;
+    color: #3f3d3d;
+}
+.place
+{
+    color: rgb(80, 79, 78);
+    padding-left: 25px;
+    font-style: italic;
+}
+
+/*icons for awards */
+.icon-award
+{
+    color:  rgb(155, 33, 94);
+}
+.skills {
+    font-weight: 600;
+    padding-top: 10px;
+    
+    
+}
+.skills li
+{
+    padding-bottom: 5px;
+    
+}

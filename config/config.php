@@ -37,7 +37,6 @@ function insertQuery($conn, $sql)
 {
     $insertExecute = $conn->query($sql);
     if ($insertExecute === TRUE) {
-        print_r($conn->insert_id);
         return $conn->insert_id;
     } else {
         return false;

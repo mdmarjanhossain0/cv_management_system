@@ -45,14 +45,15 @@
     padding-right: 1rem;
     align-items: center;
 }
-.main-container .resume-info div .header section {
+.main-container .resume-info div .header a {
     background: #F0F1F3;
     padding: 0.3rem;
     border-radius: 8px;
     cursor: pointer;
+    text-decoration: none;
 }
 
-.main-container .resume-info div .header section:hover {
+.main-container .resume-info div .header a:hover {
     border: 1px solid gray;
 }
 

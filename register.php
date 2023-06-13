@@ -39,7 +39,24 @@
         } else if (isSubDomainExist($conn, $sub_domain)) {
             $error_message = "Sub Domain already exist";
         } else {
-            $sql = "INSERT INTO account (username, email, sub_domain, title, password) values ('$username', '$email', '$sub_domain', '$profile_title', '$password')";
+            $profile_image = $_FILES['profile_image']['name'];
+            if (!($profile_image == "")) {
+
+                $expbanner = explode('.', $profile_image);
+                $profile_image_exptype = $expbanner[1];
+                date_default_timezone_set('Asia/Dhaka');
+                $date = date('d/m/Yh:i:sa', time());
+                $rand = rand(10000, 99999);
+                $encname = $date . $rand;
+                $profile_imagename = md5($encname) . '.' . $profile_image_exptype;
+                $profile_image_path = "images/profile_image/" . $profile_imagename;
+                move_uploaded_file($_FILES["profile_image"]["tmp_name"], $profile_image_path);
+                $sql = "INSERT INTO account (username, email, sub_domain, title, profile_image, password) values ('$username', '$email', '$sub_domain', '$profile_title', '$profile_image_path', '$password')";
+            } else {
+
+                $profile_image_path = null;
+                $sql = "INSERT INTO account (username, email, sub_domain, title, profile_image, password) values ('$username', '$email', '$sub_domain', '$profile_title', null, '$password')";
+            }
             $result = insertQuery($conn, $sql);
             if ($result) {
                 $_SESSION["authenticated"] = true;
@@ -62,7 +79,8 @@
             <div class="select-tab">
                 <p>
                     Hello, Friend!
-                    Enter your personal details and start journey with us
+                    <br>
+                    Hello, Friend! Enter your personal details and start your journey with us.
                 </p>
                 <button><a href="login.php" style="color: white; text-decoration: none;">Log In</a></button>
             </div>
@@ -70,7 +88,8 @@
                 <div class="title">
                     <h3>Register</h3>
                 </div>
-                <form method="POST" action="register.php">
+                <form method="POST" action="register.php" enctype="multipart/form-data">
+                    <input type="file" accept="imgae/*" name="profile_image">
                     <input type="text" placeholder="Username" id="username" name="username" value="<?php echo  $username; ?>" required />
                     <input type="email" placeholder="Email" id="email" name="email" value="<?php echo  $email; ?>" required />
                     <input type="text" placeholder="Sub Domain" id="sub_domain" name="sub_domain" value="<?php echo  $sub_domain; ?>" required />

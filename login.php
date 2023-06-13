@@ -46,7 +46,8 @@
             <div class="select-tab">
                 <p>
                     Hello, Friend!
-                    Enter your personal details and start journey with us
+                    <br>
+                    Hello, Friend! Enter your personal details and start your journey with us.
                 </p>
                 <button><a href="register.php" style="color: white; text-decoration: none;">Register</a></button>
             </div>
