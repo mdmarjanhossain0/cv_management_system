@@ -22,6 +22,36 @@
     }
 
     $user_id = $user['id'];
+    $delete_message = null;
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if (isset($_POST["type"]) && $_POST["type"] == "delete") {
+            if (isset($_GET["delete_id"])) {
+                $delete_id = $_POST["delete_id"];
+                if (isset($_POST["table"]) && $_POST["table"] == "education") {
+                    $sql = "DELETE FROM education where id = $delete_id";
+                } else if (isset($_POST["table"]) && $_POST["table"] == "experience") {
+                    $sql = "DELETE FROM experience where id = $delete_id";
+                } else if (isset($_POST["table"]) && $_POST["table"] == "contact") {
+                    $sql = "DELETE FROM contact where id = $delete_id";
+                } else if (isset($_POST["table"]) && $_POST["table"] == "reference") {
+                    $sql = "DELETE FROM reference where id = $delete_id";
+                } else {
+                }
+
+                if (isset($sql)) {
+                    if (deleteQuery($conn, $sql)) {
+                        $delete_message = "Successfully deleted";
+                        print_r($url = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
+                        $_SERVER["REQUEST_URL"] = "";
+                        // header("location: profile.php");
+                    } else {
+                        $delete_message = "Delete error";
+                    }
+                }
+            }
+        }
+    }
     $educations = getQuery($conn, "select * from education where account_id = $user_id");
     $references = getQuery($conn, "select * from reference where account_id = $user_id");
     $experiences = getQuery($conn, "select * from experience where account_id = $user_id");
@@ -30,11 +60,24 @@
     dbClose($conn);
     ?>
 
+    <?php if ($delete_message != null) { ?>
+        <div class="alert alert-success" role="alert" style="text-align: center">
+            <?php echo $delete_message ?>
+        </div>
+    <?php } ?>
     <div class="main-container">
         <div class="basic-info">
             <img src="<?php echo $user["profile_image"] ?>" alt="<?php echo $user["username"] ?> profile picture">
             <h3> <?php echo $user["username"] ?> </h3>
+            <div class="resume-link">
+                <span>CV:</span><a href="http://<?php echo $user['sub_domain'] ?>.localhost/openresume/myresume" target="_blank">CV Link</a>
+            </div>
             <p>Email: <?php echo $user["email"] ?> </p>
+            <br>
+            <br>
+            <p>
+                <?php echo $user["about"]; ?>
+            </p>
         </div>
         <div class="resume-info">
             <div class="sub-container">
@@ -65,7 +108,16 @@
                                     <td><?php echo $item["description"] ?></td>
                                     <td><?php echo $item["duration"] ?></td>
                                     <td><?php echo $item["course"] ?></td>
-                                    <td><i class="fa-solid fa-pen"></i></td>
+                                    <td>
+                                        <a href="edit_education_info.php?id=<?php echo $item['id'] ?>"><i class="fa-solid fa-pen"></i></a>
+                                        <form action="profile.php" method="POST" style="display: inline;">
+                                            <input type="text" name="type" value="delete" style="display: none;">
+                                            <input type="text" name="table" value="education" style="display: none;">
+                                            <input type="text" name="delete_id" value="<?php echo $item['id']; ?>" style="display: none;">
+                                            <button type="submit" class="fa-solid fa-trash" style="color: #FF726F; border: none"></button>
+                                        </form>
+                                        <!-- <a href="profile.php?type=delete&table=education&delete_id=<?php echo $item['id']; ?>" onclick="return confirm('Are you sure?')"><i class="fa-solid fa-trash" style="color: #FF726F;"></i></a> -->
+                                    </td>
                                 </tr>
                             <?php
                             }
@@ -102,7 +154,9 @@
                                     <td><?php echo $item["description"] ?></td>
                                     <td><?php echo $item["duration"] ?></td>
                                     <td><?php echo $item["extra_info"] ?></td>
-                                    <td><i class="fa-solid fa-pen"></i></td>
+                                    <td>
+                                        <a href="edit_experience_info.php?id=<?php echo $item['id']; ?>"><i class="fa-solid fa-pen"></i></a>
+                                    </td>
                                 </tr>
                             <?php
                             }
@@ -135,7 +189,9 @@
                                 <tr>
                                     <td><?php echo $item["title"] ?></td>
                                     <td><?php echo $item["value"] ?></td>
-                                    <td><i class="fa-solid fa-pen"></i></td>
+                                    <td>
+                                        <a href="edit_contact_info.php?id=<?php echo $item['id']; ?>"><i class="fa-solid fa-pen"></i></a>
+                                    </td>
                                 </tr>
                             <?php
                             }
@@ -171,7 +227,9 @@
                                         <td><?php echo $item["name"] ?></td>
                                         <td><?php echo $item["description"] ?></td>
                                         <td><?php echo $item["extra_info"] ?></td>
-                                        <td><i class="fa-solid fa-pen"></i></td>
+                                        <td>
+                                            <a href="edit_reference_info.php?id=<?php echo $item['id'] ?>"><i class="fa-solid fa-pen"></i></a>
+                                        </td>
                                     </tr>
                                 <?php
                                 }

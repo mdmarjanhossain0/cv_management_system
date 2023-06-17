@@ -15,13 +15,8 @@
     }
     $user_id = $user["id"];
     $educations = getQuery($conn, "select * from education where account_id = $user_id");
-    // print_r($educations);
-    $experiences = getQuery($conn, "select * from experience where account_id = $user_id");
-    print_r($experiences);
     $contacts = getQuery($conn, "select * from contact where account_id = $user_id");
-    // print_r($contacts);
     $references = getQuery($conn, "select * from reference where account_id = $user_id");
-    // print_r($references);
     ?>
     <div class="container">
         <div class="left">

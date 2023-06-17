@@ -22,6 +22,7 @@
     $email = "";
     $sub_domain = "";
     $profile_title = "";
+    $about = "";
     $password = "";
     $confirm_password = "";
     $error_message = null;
@@ -30,6 +31,7 @@
         $email = $_POST["email"];
         $sub_domain = $_POST["sub_domain"];
         $profile_title = $_POST["profile_title"];
+        $about = $_POST["about"];
         $password = $_POST["password"];
         $confirm_password = $_POST["confirm_password"];
         if ($password != $confirm_password) {
@@ -51,12 +53,10 @@
                 $profile_imagename = md5($encname) . '.' . $profile_image_exptype;
                 $profile_image_path = "images/profile_image/" . $profile_imagename;
                 move_uploaded_file($_FILES["profile_image"]["tmp_name"], $profile_image_path);
-                $sql = "INSERT INTO account (username, email, sub_domain, title, profile_image, password) values ('$username', '$email', '$sub_domain', '$profile_title', '$profile_image_path', '$password')";
             } else {
-
-                $profile_image_path = null;
-                $sql = "INSERT INTO account (username, email, sub_domain, title, profile_image, password) values ('$username', '$email', '$sub_domain', '$profile_title', null, '$password')";
+                $profile_image_path = "images/profile_image/default_profile_image.webp";
             }
+            $sql = "INSERT INTO account (username, email, sub_domain, title, profile_image, about, password) values ('$username', '$email', '$sub_domain', '$profile_title', '$profile_image_path', '$about', '$password')";
             $result = insertQuery($conn, $sql);
             if ($result) {
                 $_SESSION["authenticated"] = true;
@@ -94,7 +94,8 @@
                     <input type="email" placeholder="Email" id="email" name="email" value="<?php echo  $email; ?>" required />
                     <input type="text" placeholder="Sub Domain" id="sub_domain" name="sub_domain" value="<?php echo  $sub_domain; ?>" required />
                     <input type="text" placeholder="Profile title" id="profile_title" name="profile_title" value="<?php echo  $profile_title; ?>" required />
-                    <input type="password" placeholder="password" name="password" value="<?php echo  $password; ?>" required />
+                    <textarea name="about" placeholder="Write something about you..." id="about" style="min-height: 10rem;"><?php echo  $about; ?></textarea>
+                    <input type=" password" placeholder="password" name="password" value="<?php echo  $password; ?>" required />
                     <input type="password" placeholder="Confirm Password" name="confirm_password" value="<?php echo  $confirm_password; ?>" required />
                     <label for="" style="color: red; font-weight: bold;"><?php echo $error_message ?></label>
                     <button name="register">Register</button>

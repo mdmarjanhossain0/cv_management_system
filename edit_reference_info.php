@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <title>Add Work Experience</title>
+    <title>Add Reference</title>
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/create_form.css">
 </head>
@@ -19,60 +19,74 @@
     if (!$authenticated) {
         header("location: login.php");
     }
+    $edit_id = 0;
+    $edit_item = null;
     $user_id = $user['id'];
-    $institution = "";
+    $name = "";
     $description = "";
-    $duration = "";
     $extra_info = "";
+    if (isset($_GET["id"])) {
+        $edit_id = $_GET["id"];
+        $edit_item = getQuery($conn, "select * from reference where id = $edit_id");
+        $dataLen = count($edit_item);
+        if ($dataLen == 1) {
+            $edit_item = $edit_item[0];
+
+            $name = $edit_item["name"];
+            $description = $edit_item["description"];
+            $extra_info = $edit_item["extra_info"];
+        }
+    } else {
+        header("location: home.php");
+    }
     $error_message = null;
+    $update_message = null;
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $institution = $_POST["institution"];
-        $extra_info = $_POST["extra_info"];
-        $duration = $_POST["duration"];
+        $name = $_POST["name"];
         $description = $_POST["description"];
-        $sql = "INSERT INTO experience (account_id, institution, extra_info, duration, description) values ($user_id, '$institution', '$extra_info', '$duration', '$description')";
-        $result = insertQuery($conn, $sql);
+        $extra_info = $_POST["extra_info"];
+        $sql = "UPDATE reference SET name = '$name', description = '$description', extra_info = '$extra_info' where id = $edit_id";
+        $result = updateQuery($conn, $sql);
         if ($result) {
-            $institution = "";
-            $description = "";
-            $duration = "";
-            $extra_info = "";
+
+
+            $update_message = "Successfully updated";
         } else {
             $error_message = "Error";
         }
     }
-
-
-
-
-
-    $experiences = getQuery($conn, "select * from experience where account_id = $user_id");
+    $references = getQuery($conn, "select * from reference where account_id = $user_id");
     include "snippets/header.php";
     dbClose($conn);
     ?>
 
+
+
+    <?php if ($update_message != null) { ?>
+        <div class="alert alert-success" role="alert" style="text-align: center">
+            <?php echo $update_message ?>
+        </div>
+    <?php } ?>
     <div class="main-container">
         <div class="data-table">
-            <h1>Work Experience List</h1>
+            <h1>Reference List</h1>
             <div class="table-container">
                 <table class="table table-striped mb-0">
                     <thead style="background-color: #002d72;">
                         <tr>
-                            <th scope="col">Institution</th>
+                            <th scope="col">Name</th>
                             <th scope="col">Descrition</th>
-                            <th scope="col">Duration</th>
                             <th scope="col">extra_info</th>
                             <th scope="col">Edit</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php
-                        foreach ($experiences as $item) {
+                        foreach ($references as $item) {
                         ?>
                             <tr>
-                                <td><?php echo $item["institution"] ?></td>
+                                <td><?php echo $item["name"] ?></td>
                                 <td><?php echo $item["description"] ?></td>
-                                <td><?php echo $item["duration"] ?></td>
                                 <td><?php echo $item["extra_info"] ?></td>
                                 <td><i class="fa-solid fa-pen"></i></td>
                             </tr>
@@ -84,23 +98,20 @@
             </div>
         </div>
         <div class="data-form">
-            <h1>Work Experience Form</h1>
-            <form method="POST" action="add_work_experience.php">
-                <label for="institution_name">Institution Name*</label>
+            <h1>Reference Form</h1>
+            <form method="POST" action="edit_reference_info.php?id=<?php echo $edit_id ?>">
+                <label for="name">Name*</label>
                 <br>
-                <input type="text" placeholder="Institution Name" name="institution" id="institution_name" value="<?php echo  $institution; ?>" required>
+                <input type="text" placeholder="Name" name="name" id="name" value="<?php echo  $name; ?>" required>
                 <br>
-                <label for="duration">Duration*</label>
+                <label for="institution_name">Descrption*</label>
                 <br>
-                <input type="text" placeholder="Duration" name="duration" id="duration" value="<?php echo  $duration; ?>" required>
+                <textarea name="description" id="description"><?php echo  $description; ?></textarea>
                 <br>
                 <label for="extra_info">Extra Info</label>
                 <br>
                 <input type="text" placeholder="Extra Info" name="extra_info" id="extra_info" value="<?php echo  $extra_info; ?>">
                 <br>
-                <label for="institution_name">Descrption</label>
-                <br>
-                <textarea name="description" id="description"><?php echo  $description; ?></textarea>
                 <label style="color: red; font-weight: bold;"><?php echo $error_message; ?></label>
                 <div class="submit-button-container">
                     <button type="submit">Submit</button>

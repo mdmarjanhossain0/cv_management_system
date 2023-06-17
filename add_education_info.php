@@ -71,7 +71,9 @@
                                 <td><?php echo $item["description"] ?></td>
                                 <td><?php echo $item["duration"] ?></td>
                                 <td><?php echo $item["course"] ?></td>
-                                <td><i class="fa-solid fa-pen"></i></td>
+                                <td>
+                                    <a href="edit_education_info.php?id=<?php echo $item['id'] ?>"><i class="fa-solid fa-pen"></i></a>
+                                </td>
                             </tr>
                         <?php
                         }

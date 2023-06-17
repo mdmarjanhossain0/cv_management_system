@@ -42,3 +42,24 @@ function insertQuery($conn, $sql)
         return false;
     }
 }
+function updateQuery($conn, $sql)
+{
+    $insertExecute = $conn->query($sql);
+    if ($insertExecute === TRUE) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+
+function deleteQuery($conn, $sql)
+{
+    $insertExecute = $conn->query($sql);
+    if ($insertExecute === TRUE) {
+        return true;
+    } else {
+        return false;
+    }
+}
