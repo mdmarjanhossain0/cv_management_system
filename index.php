@@ -5,23 +5,104 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <title>Home</title>
-    <link rel="stylesheet" href="css/header.css">
+    <title>Landing Page</title>
 
-    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="css/landing_style.css" />
+    <link rel="stylesheet" href="css/home.css" />
+    <link rel="stylesheet" href="css/landing_about.css" />
 </head>
 
 <body>
-    <?php
+<?php
     include "middleware/authentication.php";
-    include "snippets/header.php";
     ?>
-    <div class="home">
-        <h1>Welcome to OpenResume.com</h1>
-        <p>We are providing you automatic resume generation and management service</p>
+
+    <div class="top">
+        <header id="navbar">
+            <a href="#" class="logo">OpenResume</a>
+            <input type="checkbox" id="menu-bar">
+            <label for="menu-bar" class="fas fa-bars"></label>
+            <nav class="navbar">
+            <a href="index.php">Home</a>
+
+            <?php if ($authenticated) { ?>
+                <a href="profile.php">Profile</a>
+                <a href="logout.php">Lougout</a>
+            <?php } else { ?>
+                <a href="login.php">Login</a>
+                <a href="register.php">Register</a>
+            <?php } ?>
+
+            </nav>
+        </header>
+
+
+
+
+
+
+
+
+        <section class="home">
+            <div class="content">
+                <h3>Welcome to OpenResume</h3>
+                <p>"Welcome to CV Management, where we transform your job search journey into a breeze! Our user-friendly platform is designed to help you create, edit, and optimize your CV effortlessly. Say goodbye to stress and hello to success as you showcase your skills and experience to potential employers. Let's get started!"</p>
+
+                <a href="#" class="btn">Get start</a>
+            </div>
+
+
+            <div class="image">
+
+                <img src="./images/home-img.png" />
+            </div>
+        </section>
+    </div>
+
+    <div class="about">
+        <div class="left">
+            <img src="./images/about.png" alt="about" class="about-img" />
+        </div>
+        <div class="right" data-aos="fade-up" data-aos-offset="200" data-aos-delay="50" data-aos-easing="ease-in-out"
+            data-aos-mirror="true" data-aos-once="false" data-aos-anchor-placement="top-center">
+            <h3>About us</h3>
+            <p class="about-title">A proven Resume Management system</p>
+
+            <ul>
+                <li>
+                    ✅ - Easy-to-use CV creation and editing tools
+                </li>
+                    <li>
+                    ✅ - Professionally designed templates for a polished and impactful CV
+                    </li>
+                    <li>
+                    ✅ - Keyword optimization to enhance your CV's visibility to employers
+                    </li>
+                    <li>
+                    ✅ - Customizable sections for highlighting your skills, education, experience, and more
+                    </li>
+                    <li>
+                    ✅ - Ability to import and export your CV in various formats (PDF, Word, etc.)
+                    </li>
+                    <li>
+                    ✅ - Expert tips and guidance for crafting a standout CV
+                    </li>
+                    <li>
+                    ✅ - Personalized feedback and suggestions for improvement
+                    </li>
+                    <li>
+                    ✅ - Secure storage and access to your CV anytime, anywhere
+                    </li>
+                    <li>
+                    ✅ - Job search assistance and integration with popular job boards
+                    </li>
+                    <li>
+                    ✅ - Collaboration features for sharing and receiving feedback from peers or mentors.
+                    </li>
+            </ul>
+            <button>Get started ➡</button>
+        </div>
     </div>
     <footer class="">
         <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
@@ -30,43 +111,7 @@
         </div>
     </footer>
 
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
-    </script>
-    <script>
-        function toggle_button() {
-            var checkbox = document.getElementById("toggle_input").checked
-            console.log(checkbox)
-            if (checkbox == true) {
-                document.getElementById("toggle_label").innerHTML = '<i class="fa-solid fa-chevron-down"></i>'
-                document.getElementById("nav_ul").style.display = "flex"
-            } else {
-                document.getElementById("toggle_label").innerHTML = '<i class="fa-solid fa-bars"></i>'
-                document.getElementById("nav_ul").style.display = "none"
-            }
-        }
-
-
-
-
-
-        window.onresize = (event) => {
-            console.log("fkasdjfk")
-            if (document.getElementsByTagName("body")[0].clientWidth > 992) {
-                document.getElementById("toggle_input").checked = false
-                document.getElementById("toggle_label").innerHTML = '<i class="fa-solid fa-bars"></i>'
-                document.getElementById("nav_ul").style.display = "flex"
-            } else {
-                toggle_button()
-                console.log("faksdjfklsdfjsdkl")
-            }
-        }
-    </script>
+    <script src="./js/sticky.js"></script>
 </body>
 
 </html>

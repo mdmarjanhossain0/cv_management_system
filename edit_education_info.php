@@ -40,7 +40,7 @@
             $course = $edit_item["course"];
         }
     } else {
-        header("location: home.php");
+        header("location: index.php");
     }
     $error_message = null;
     $message = null;

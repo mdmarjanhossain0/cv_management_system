@@ -9,11 +9,15 @@ body {
 }
 header {
     padding: 0.5rem;
-    background: #23384E;
+    background: #007bff;
     position: sticky;
     top: 0px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     z-index: 9999;
+    background: radial-gradient(80vw at 27.17% 41.29%, #7FC6EF 45%, #0283E1 70%);
+    background-size: center;
+    background-position: right;
+    background-image: radial-gradient(1231.6px at 37.17% 31.29%, rgb(127, 198, 239) 0%, rgb(2, 131, 225) 100%);
 }
 header .navbar {
     display: flex;
@@ -57,8 +61,12 @@ header .navbar input {
 }
 
 footer {
-    background: #23384E !important;
+    /* background: #23384E !important; */
     color: white !important;
+    background: radial-gradient(80vw at 27.17% 41.29%, #7FC6EF 45%, #0283E1 70%) !important;
+    background-size: center;
+    background-position: right;
+    background-image: radial-gradient(1231.6px at 37.17% 31.29%, rgb(127, 198, 239) 0%, rgb(2, 131, 225) 100%);
 }
 
 @media (max-width: 992px) {

@@ -38,7 +38,7 @@
             $value = $edit_item["value"];
         }
     } else {
-        header("location: home.php");
+        header("location: index.php");
     }
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $title = $_POST["title"];

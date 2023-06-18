@@ -16,7 +16,7 @@
     include "middleware/authentication.php";
     include "config/validation.php";
     if (!$authenticated) {
-        header("location: home.php");
+        header("location: index.php");
     }
     $user_id = $user["id"];
     $username = $user["username"];

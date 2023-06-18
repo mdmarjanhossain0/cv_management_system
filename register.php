@@ -63,7 +63,7 @@
             if ($result) {
                 $_SESSION["authenticated"] = true;
                 $_SESSION["id"] = $result;
-                header("location: profile.php");
+                // header("location: profile.php");
             } else {
                 $_SESSION["authenticated"] = false;
             }

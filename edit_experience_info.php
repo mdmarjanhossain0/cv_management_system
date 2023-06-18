@@ -40,7 +40,7 @@
             $extra_info = $edit_item["extra_info"];
         }
     } else {
-        header("location: home.php");
+        header("location: index.php");
     }
     $error_message = null;
     $message = null;
