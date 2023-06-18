@@ -21,9 +21,7 @@
     ?>
     <div class="home">
         <h1>Welcome to OpenResume.com</h1>
-        <p>Filler text is text that shares some characteristics of a real written text, but is random or otherwise
-            generated. It may be used to display a sample of fonts, generate text for testing, or to spoof an e-mail
-            spam filter.</p>
+        <p>We are providing you automatic resume generation and management service</p>
     </div>
     <footer class="">
         <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
