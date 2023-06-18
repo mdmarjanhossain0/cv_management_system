@@ -25,8 +25,19 @@
     $delete_message = null;
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+        if (isset($_POST["design"])) {
+            $design = $_POST["design"];
+            $design_sql = "UPDATE account SET seleted_template = '$design' where id = $user_id";
+            $result = updateQuery($conn, $design_sql);
+
+
+            if ($result) {
+                $user = getQuery($conn, "SELECT * FROM account where id = $user_id")[0];
+            }
+        }
         if (isset($_POST["type"]) && $_POST["type"] == "delete") {
-            if (isset($_GET["delete_id"])) {
+            if (isset($_POST["delete_id"])) {
                 $delete_id = $_POST["delete_id"];
                 if (isset($_POST["table"]) && $_POST["table"] == "education") {
                     $sql = "DELETE FROM education where id = $delete_id";
@@ -42,9 +53,6 @@
                 if (isset($sql)) {
                     if (deleteQuery($conn, $sql)) {
                         $delete_message = "Successfully deleted";
-                        print_r($url = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI']);
-                        $_SERVER["REQUEST_URL"] = "";
-                        // header("location: profile.php");
                     } else {
                         $delete_message = "Delete error";
                     }
@@ -68,9 +76,10 @@
     <div class="main-container">
         <div class="basic-info">
             <img src="<?php echo $user["profile_image"] ?>" alt="<?php echo $user["username"] ?> profile picture">
+            <a href="update_profile.php" style="margin-top: 1rem;" class="resume-link">Update your profile <i class="fa-solid fa-pen"></i></a>
             <h3> <?php echo $user["username"] ?> </h3>
             <div class="resume-link">
-                <span>CV:</span><a href="http://<?php echo $user['sub_domain'] ?>.localhost/openresume/myresume" target="_blank">CV Link</a>
+                <span>CV:</span><a href="http://<?php echo $user['sub_domain'] ?>.localhost/openresume/myresume.php" target="_blank">CV Link</a>
             </div>
             <p>Email: <?php echo $user["email"] ?> </p>
             <br>
@@ -112,11 +121,10 @@
                                         <a href="edit_education_info.php?id=<?php echo $item['id'] ?>"><i class="fa-solid fa-pen"></i></a>
                                         <form action="profile.php" method="POST" style="display: inline;">
                                             <input type="text" name="type" value="delete" style="display: none;">
-                                            <input type="text" name="table" value="education" style="display: none;">
+                                            <input type="text" name="table" value="reference" style="display: none;">
                                             <input type="text" name="delete_id" value="<?php echo $item['id']; ?>" style="display: none;">
-                                            <button type="submit" class="fa-solid fa-trash" style="color: #FF726F; border: none"></button>
+                                            <button type="submit" class="fa-solid fa-trash" style="color: #FF726F; border: none" onclick="return confirm('Are you sure?')"></button>
                                         </form>
-                                        <!-- <a href="profile.php?type=delete&table=education&delete_id=<?php echo $item['id']; ?>" onclick="return confirm('Are you sure?')"><i class="fa-solid fa-trash" style="color: #FF726F;"></i></a> -->
                                     </td>
                                 </tr>
                             <?php
@@ -156,6 +164,12 @@
                                     <td><?php echo $item["extra_info"] ?></td>
                                     <td>
                                         <a href="edit_experience_info.php?id=<?php echo $item['id']; ?>"><i class="fa-solid fa-pen"></i></a>
+                                        <form action="profile.php" method="POST" style="display: inline;">
+                                            <input type="text" name="type" value="delete" style="display: none;">
+                                            <input type="text" name="table" value="experience" style="display: none;">
+                                            <input type="text" name="delete_id" value="<?php echo $item['id']; ?>" style="display: none;">
+                                            <button type="submit" class="fa-solid fa-trash" style="color: #FF726F; border: none" onclick="return confirm('Are you sure?')"></button>
+                                        </form>
                                     </td>
                                 </tr>
                             <?php
@@ -191,6 +205,12 @@
                                     <td><?php echo $item["value"] ?></td>
                                     <td>
                                         <a href="edit_contact_info.php?id=<?php echo $item['id']; ?>"><i class="fa-solid fa-pen"></i></a>
+                                        <form action="profile.php" method="POST" style="display: inline;">
+                                            <input type="text" name="type" value="delete" style="display: none;">
+                                            <input type="text" name="table" value="contact" style="display: none;">
+                                            <input type="text" name="delete_id" value="<?php echo $item['id']; ?>" style="display: none;">
+                                            <button type="submit" class="fa-solid fa-trash" style="color: #FF726F; border: none" onclick="return confirm('Are you sure?')"></button>
+                                        </form>
                                     </td>
                                 </tr>
                             <?php
@@ -229,6 +249,12 @@
                                         <td><?php echo $item["extra_info"] ?></td>
                                         <td>
                                             <a href="edit_reference_info.php?id=<?php echo $item['id'] ?>"><i class="fa-solid fa-pen"></i></a>
+                                            <form action="profile.php" method="POST" style="display: inline;">
+                                                <input type="text" name="type" value="delete" style="display: none;">
+                                                <input type="text" name="table" value="reference" style="display: none;">
+                                                <input type="text" name="delete_id" value="<?php echo $item['id']; ?>" style="display: none;">
+                                                <button type="submit" class="fa-solid fa-trash" style="color: #FF726F; border: none" onclick="return confirm('Are you sure?')"></button>
+                                            </form>
                                         </td>
                                     </tr>
                                 <?php
@@ -237,6 +263,38 @@
                             </tbody>
                         </table>
                     </div>
+                </div>
+            </div>
+            <div class="sub-container">
+
+
+
+
+
+                <div class="header">
+                    <h2>Select Your Favorite Template</h2>
+                </div>
+                <div class="design-container">
+                    <form action="profile.php" method="POST" class="design-card">
+
+
+                        <img src="images/design/design2.png" alt="">
+                        <?php if ($user["seleted_template"] == "") { ?>
+                            <i class="fa-solid fa-circle-check icon"></i>
+                        <?php } else { ?>
+                            <input type="checkbox" name="desing" style="display: none;">
+                            <button class="fa-solid fa-square-dashed icon" name="design" value=""></button>
+                        <?php } ?>
+                    </form>
+                    <form action="profile.php" method="POST" class="design-card">
+                        <img src="images/design/design43.png" alt="">
+                        <?php if ($user["seleted_template"] == "design43") { ?>
+                            <i class="fa-solid fa-circle-check icon"></i>
+                        <?php } else { ?>
+                            <input type="checkbox" name="desing" style="display: none;">
+                            <button class="fa-solid fa-square-dashed icon" name="design" value="design43"></button>
+                        <?php } ?>
+                    </form>
                 </div>
             </div>
         </div>
@@ -274,14 +332,12 @@
 
 
         window.onresize = (event) => {
-            console.log("fkasdjfk")
             if (document.getElementsByTagName("body")[0].clientWidth > 992) {
                 document.getElementById("toggle_input").checked = false
                 document.getElementById("toggle_label").innerHTML = '<i class="fa-solid fa-bars"></i>'
                 document.getElementById("nav_ul").style.display = "flex"
             } else {
                 toggle_button()
-                console.log("faksdjfklsdfjsdkl")
             }
         }
     </script>

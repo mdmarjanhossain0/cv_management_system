@@ -27,20 +27,46 @@
     $duration = "";
     $course = "";
     $error_message = null;
+    $message = null;
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $institution = $_POST["institution"];
-        $course = $_POST["course"];
-        $duration = $_POST["duration"];
-        $description = $_POST["description"];
-        $sql = "INSERT INTO education (account_id, institution, course, duration, description) values ($user_id, '$institution', '$course', '$duration', '$description')";
-        $result = insertQuery($conn, $sql);
-        if ($result) {
-            $institution = "";
-            $description = "";
-            $duration = "";
-            $course = "";
+        if (isset($_POST["type"]) && $_POST["type"] == "delete") {
+            if (isset($_POST["delete_id"])) {
+                $delete_id = $_POST["delete_id"];
+                if (isset($_POST["table"]) && $_POST["table"] == "education") {
+                    $sql = "DELETE FROM education where id = $delete_id";
+                } else if (isset($_POST["table"]) && $_POST["table"] == "experience") {
+                    $sql = "DELETE FROM experience where id = $delete_id";
+                } else if (isset($_POST["table"]) && $_POST["table"] == "contact") {
+                    $sql = "DELETE FROM contact where id = $delete_id";
+                } else if (isset($_POST["table"]) && $_POST["table"] == "reference") {
+                    $sql = "DELETE FROM reference where id = $delete_id";
+                } else {
+                }
+
+                if (isset($sql)) {
+                    if (deleteQuery($conn, $sql)) {
+                        $message = "Successfully deleted";
+                    } else {
+                        $message = "Delete error";
+                    }
+                }
+            }
         } else {
-            $error_message = "Error";
+            $institution = $_POST["institution"];
+            $course = $_POST["course"];
+            $duration = $_POST["duration"];
+            $description = $_POST["description"];
+            $sql = "INSERT INTO education (account_id, institution, course, duration, description) values ($user_id, '$institution', '$course', '$duration', '$description')";
+            $result = insertQuery($conn, $sql);
+            if ($result) {
+                $institution = "";
+                $description = "";
+                $duration = "";
+                $course = "";
+                $message = "Successfully added.";
+            } else {
+                $error_message = "Error";
+            }
         }
     }
     $educations = getQuery($conn, "select * from education where account_id = $user_id");
@@ -48,6 +74,14 @@
     dbClose($conn);
     ?>
 
+
+
+
+    <?php if ($message != null) { ?>
+        <div class="alert alert-success" role="alert" style="text-align: center">
+            <?php echo $message ?>
+        </div>
+    <?php } ?>
     <div class="main-container">
         <div class="data-table">
             <h1>Education List</h1>
@@ -73,6 +107,12 @@
                                 <td><?php echo $item["course"] ?></td>
                                 <td>
                                     <a href="edit_education_info.php?id=<?php echo $item['id'] ?>"><i class="fa-solid fa-pen"></i></a>
+                                    <form action="add_education_info.php" method="POST" style="display: inline;">
+                                        <input type="text" name="type" value="delete" style="display: none;">
+                                        <input type="text" name="table" value="education" style="display: none;">
+                                        <input type="text" name="delete_id" value="<?php echo $item['id']; ?>" style="display: none;">
+                                        <button type="submit" class="fa-solid fa-trash" style="color: #FF726F; border: none" onclick="return confirm('Are you sure?')"></button>
+                                    </form>
                                 </td>
                             </tr>
                         <?php

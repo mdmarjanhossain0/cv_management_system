@@ -85,7 +85,15 @@
                             <tr>
                                 <td><?php echo $item["title"] ?></td>
                                 <td><?php echo $item["value"] ?></td>
-                                <td><i class="fa-solid fa-pen"></i></td>
+                                <td>
+                                    <a href="edit_contact_info.php?id=<?php echo $item['id']; ?>"><i class="fa-solid fa-pen"></i></a>
+                                    <form action="add_contact_info.php" method="POST" style="display: inline;">
+                                        <input type="text" name="type" value="delete" style="display: none;">
+                                        <input type="text" name="table" value="contact" style="display: none;">
+                                        <input type="text" name="delete_id" value="<?php echo $item['id']; ?>" style="display: none;">
+                                        <button type="submit" class="fa-solid fa-trash" style="color: #FF726F; border: none" onclick="return confirm('Are you sure?')"></button>
+                                    </form>
+                                </td>
                             </tr>
                         <?php
                         }

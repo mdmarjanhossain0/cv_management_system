@@ -13,21 +13,22 @@
 <body>
 
     <?php
-    include "middleware/authentication.php";
+    // include "middleware/subdomain_authentication.php";
     if (!$authenticated) {
         header("location: login.php");
     }
     $user_id = $user["id"];
     $educations = getQuery($conn, "select * from education where account_id = $user_id");
+    $experiences = getQuery($conn, "select * from experience where account_id = $user_id");
     $contacts = getQuery($conn, "select * from contact where account_id = $user_id");
     $references = getQuery($conn, "select * from reference where account_id = $user_id");
     ?>
     <div id="container">
         <img src="<?php echo $user["profile_image"] ?>" alt="<?php echo $user["username"] ?> Profile Image" id="pic" />
         <div id="contact-info" class="vcard">
-            <h1 class="fn"><?php echo $user["username"]; ?></h1>
+            <h1 class="fn"><?php echo $user["username"]; ?><sub style="font-size: 20px; color: gray;">&nbsp;&nbsp;&nbsp;-&nbsp; <?php echo $user["title"]; ?></sub></h1>
             <p>
-                <i class="fa-solid fa-phone-volume"></i><strong> Cell: </strong><span class="tel">01575033617</span><br />
+                <i class="fa-solid fa-phone-volume"></i><strong> Cell: </strong><span class="tel"><?php echo $user["contact_number"]; ?></span><br />
                 <i class="fa-solid fa-envelope"></i><strong> Email: </strong><a class="email" href="mailto:<?php echo $user["email"] ?>"><?php echo $user["email"] ?></a>
             </p>
         </div>
@@ -36,14 +37,7 @@
         </div>
         <div class="clear"></div>
         <dl>
-            <dd class="clear"></dd>
-            <dt>Personal Info</dt>
-            <dd>
-                <p><strong>Address: </strong>Shenpara Parbata, Mirpur 10, Dhaka</p>
-                <p><strong>Date Of Birth: </strong>13 December, 2001</p>
-                <p><strong>Nationality: </strong>Bangladeshi</p>
-                <p><strong>Marital Status: </strong>Unmarried</p>
-            </dd>
+
             <dd class="clear"></dd>
             <dt>Education</dt>
             <dd>
@@ -52,20 +46,17 @@
                 <?php } ?>
             </dd>
             <dd class="clear"></dd>
-            <dt>Programming Skills</dt>
+            <dt>Work Experience</dt>
             <dd>
                 <ol class="skillList">
-                    <li>Python</li>
-                    <li>C++</li>
-                    <li>Javascript</li>
-                    <li>HTML</li>
-                    <li>CSS</li>
-                    <li>PHP</li>
-                    <li>Jquery</li>
-                    <li>MATLAB</li>
-                    <li>C Programming</li>
+                    <?php foreach ($experiences as $item) { ?>
+                        <p><strong><?php echo $item["duration"]; ?>&nbsp;:&nbsp; </strong><a href="Certificates/Python Data Structure.pdf" class="certificateImg"><?php echo $item["institution"]; ?> </a><br>
+                            &nbsp;-&nbsp;<i style="color: #999"><?php echo $item["description"]; ?></i>
+                        </p>
+                    <?php } ?>
                 </ol>
             </dd>
+            <dd class="clear"></dd>
             <dd class="clear"></dd>
             <dt>Reference</dt>
             <dd>
@@ -73,20 +64,6 @@
                     <?php foreach ($references as $item) { ?>
                         <li><?php echo $item["name"]; ?></li>
                     <?php } ?>
-                </ol>
-            </dd>
-            <dd class="clear"></dd>
-            <dt>Certificates</dt>
-            <dd>
-                <ol class="skillList">
-                    <p><strong>May 31,2020: </strong><a href="Certificates/Python Data Structure.pdf" class="certificateImg">Python Data Structure </a><br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i style="color: #999">issued by COURSERA</i></p>
-                    <p><strong>May 30,2020: </strong><a href="Certificates/Introduction to HTML5.pdf" class="certificateImg">Introduction To HTML5 </a><br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i style="color: #999">issued by COURSERA</i></p>
-                    <p><strong>May 30,2020: </strong><a href="Certificates/Introduction to CSS3.pdf" class="certificateImg">Introduction to CSS </a><br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i style="color: #999">issued by COURSERA</i></p>
-                    <p><strong>June 9,2020: </strong><a href="Certificates/C For Everyone.pdf" class="certificateImg">C For Everyone </a><br>
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i style="color: #999">issued by COURSERA</i></p>
                 </ol>
             </dd>
             <dd class="clear"></dd>

@@ -25,16 +25,42 @@
     $title = "";
     $value = "";
     $error_message = null;
+    $message = null;
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $title = $_POST["title"];
-        $value = $_POST["value"];
-        $sql = "INSERT INTO contact (account_id, title, value) values ($user_id, '$title', '$value')";
-        $result = insertQuery($conn, $sql);
-        if ($result) {
-            $title = "";
-            $value = "";
+        if (isset($_POST["type"]) && $_POST["type"] == "delete") {
+            if (isset($_POST["delete_id"])) {
+                $delete_id = $_POST["delete_id"];
+                if (isset($_POST["table"]) && $_POST["table"] == "education") {
+                    $sql = "DELETE FROM education where id = $delete_id";
+                } else if (isset($_POST["table"]) && $_POST["table"] == "experience") {
+                    $sql = "DELETE FROM experience where id = $delete_id";
+                } else if (isset($_POST["table"]) && $_POST["table"] == "contact") {
+                    $sql = "DELETE FROM contact where id = $delete_id";
+                } else if (isset($_POST["table"]) && $_POST["table"] == "reference") {
+                    $sql = "DELETE FROM reference where id = $delete_id";
+                } else {
+                }
+
+                if (isset($sql)) {
+                    if (deleteQuery($conn, $sql)) {
+                        $message = "Successfully deleted";
+                    } else {
+                        $message = "Delete error";
+                    }
+                }
+            }
         } else {
-            $error_message = "Error";
+            $title = $_POST["title"];
+            $value = $_POST["value"];
+            $sql = "INSERT INTO contact (account_id, title, value) values ($user_id, '$title', '$value')";
+            $result = insertQuery($conn, $sql);
+            if ($result) {
+                $title = "";
+                $value = "";
+                $message = "Successfully deleted";
+            } else {
+                $error_message = "Error";
+            }
         }
     }
 
@@ -43,9 +69,15 @@
     dbClose($conn);
     ?>
 
+
+    <?php if ($message != null) { ?>
+        <div class="alert alert-success" role="alert" style="text-align: center">
+            <?php echo $message ?>
+        </div>
+    <?php } ?>
     <div class="main-container">
         <div class="data-table">
-            <h1>Education List</h1>
+            <h1>Contact List</h1>
             <div class="table-container">
                 <table class="table table-striped mb-0">
                     <thead style="background-color: #002d72;">
@@ -62,7 +94,15 @@
                             <tr>
                                 <td><?php echo $item["title"] ?></td>
                                 <td><?php echo $item["value"] ?></td>
-                                <td><i class="fa-solid fa-pen"></i></td>
+                                <td>
+                                    <a href="edit_contact_info.php?id=<?php echo $item['id']; ?>"><i class="fa-solid fa-pen"></i></a>
+                                    <form action="add_contact_info.php" method="POST" style="display: inline;">
+                                        <input type="text" name="type" value="delete" style="display: none;">
+                                        <input type="text" name="table" value="contact" style="display: none;">
+                                        <input type="text" name="delete_id" value="<?php echo $item['id']; ?>" style="display: none;">
+                                        <button type="submit" class="fa-solid fa-trash" style="color: #FF726F; border: none" onclick="return confirm('Are you sure?')"></button>
+                                    </form>
+                                </td>
                             </tr>
                         <?php
                         }
@@ -72,7 +112,7 @@
             </div>
         </div>
         <div class="data-form">
-            <h1>Education Form</h1>
+            <h1>Contact Form</h1>
             <form method="POST" action="add_contact_info.php">
                 <label for="title">Media*</label>
                 <br>

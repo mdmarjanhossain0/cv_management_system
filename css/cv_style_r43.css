@@ -1,0 +1,79 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+body {
+    background-color: black;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#HeaderImage {
+    border-radius: 10px;
+    border-style: solid;
+}
+.Contact, a{
+    color: white;
+}
+a:hover{
+    color: cyan;
+}
+.Skills, .Language, .Hobbies ul{
+    color: white;
+}
+.full {
+    max-width: 1150px;
+    margin: 0px;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+}
+.left {
+    position: initial;
+    background-color: rgb(26, 65, 65);
+    padding: 20px;
+}
+.right {
+    position: initial;
+    background-color: cyan;
+    padding: 20px;
+ 
+}
+.links {
+    padding: 10px 5px;
+    font-size: 25px;
+}
+.links:hover{
+    font-size: 30px;
+    transition: .5s;
+}
+.image, .Contact, .Skills, .Language, .Hobbies, .title,
+.Summary, .Experience, .Education, .certificates {
+    margin-bottom: 30px;
+    margin-left: 30px;
+}
+td,th {
+    padding: 5px;
+}
+h2 {
+    background-color: cyan;
+    color: black;
+    border-radius: 10px;
+    padding-left: 10px;
+    margin-bottom: 5px;
+}
+h1{
+    font-size: 50px;
+    color: brown;
+}
+.Summary h2, .Experience h2, .Education h2, .certificates h2{
+    background-color: rgb(26, 65, 65);
+    color: white;
+    border-radius: 10px;
+    padding-left: 10px;
+    margin-bottom: 5px;
+}
+.signature {
+    font-weight: 600;
+    text-align: right;
+}

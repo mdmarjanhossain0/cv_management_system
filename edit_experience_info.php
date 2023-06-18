@@ -43,18 +43,42 @@
         header("location: home.php");
     }
     $error_message = null;
-    $update_message = null;
+    $message = null;
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $institution = $_POST["institution"];
-        $extra_info = $_POST["extra_info"];
-        $duration = $_POST["duration"];
-        $description = $_POST["description"];
-        $sql = "UPDATE experience SET institution = '$institution', extra_info = '$extra_info', duration = '$duration', description = '$description' where id = $edit_id";
-        $result = updateQuery($conn, $sql);
-        if ($result) {
-            $update_message = "Successfully updated";
+        if (isset($_POST["type"]) && $_POST["type"] == "delete") {
+            if (isset($_POST["delete_id"])) {
+                $delete_id = $_POST["delete_id"];
+                if (isset($_POST["table"]) && $_POST["table"] == "education") {
+                    $sql = "DELETE FROM education where id = $delete_id";
+                } else if (isset($_POST["table"]) && $_POST["table"] == "experience") {
+                    $sql = "DELETE FROM experience where id = $delete_id";
+                } else if (isset($_POST["table"]) && $_POST["table"] == "contact") {
+                    $sql = "DELETE FROM contact where id = $delete_id";
+                } else if (isset($_POST["table"]) && $_POST["table"] == "reference") {
+                    $sql = "DELETE FROM reference where id = $delete_id";
+                } else {
+                }
+
+                if (isset($sql)) {
+                    if (deleteQuery($conn, $sql)) {
+                        $message = "Successfully deleted";
+                    } else {
+                        $message = "Delete error";
+                    }
+                }
+            }
         } else {
-            $error_message = "Error";
+            $institution = $_POST["institution"];
+            $extra_info = $_POST["extra_info"];
+            $duration = $_POST["duration"];
+            $description = $_POST["description"];
+            $sql = "UPDATE experience SET institution = '$institution', extra_info = '$extra_info', duration = '$duration', description = '$description' where id = $edit_id";
+            $result = updateQuery($conn, $sql);
+            if ($result) {
+                $message = "Successfully updated";
+            } else {
+                $error_message = "Error";
+            }
         }
     }
 
@@ -62,9 +86,9 @@
     include "snippets/header.php";
     dbClose($conn);
     ?>
-    <?php if ($update_message != null) { ?>
+    <?php if ($message != null) { ?>
         <div class="alert alert-success" role="alert" style="text-align: center">
-            <?php echo $update_message ?>
+            <?php echo $message ?>
         </div>
     <?php } ?>
     <div class="main-container">
@@ -92,6 +116,12 @@
                                 <td><?php echo $item["extra_info"] ?></td>
                                 <td>
                                     <a href="edit_experience_info.php?id=<?php echo $item['id']; ?>"><i class="fa-solid fa-pen"></i></a>
+                                    <form action="add_work_experience.php" method="POST" style="display: inline;">
+                                        <input type="text" name="type" value="delete" style="display: none;">
+                                        <input type="text" name="table" value="experience" style="display: none;">
+                                        <input type="text" name="delete_id" value="<?php echo $item['id']; ?>" style="display: none;">
+                                        <button type="submit" class="fa-solid fa-trash" style="color: #FF726F; border: none" onclick="return confirm('Are you sure?')"></button>
+                                    </form>
                                 </td>
                             </tr>
                         <?php

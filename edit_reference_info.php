@@ -40,7 +40,7 @@
         header("location: home.php");
     }
     $error_message = null;
-    $update_message = null;
+    $message = null;
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $name = $_POST["name"];
         $description = $_POST["description"];
@@ -50,7 +50,7 @@
         if ($result) {
 
 
-            $update_message = "Successfully updated";
+            $message = "Successfully updated";
         } else {
             $error_message = "Error";
         }
@@ -62,9 +62,9 @@
 
 
 
-    <?php if ($update_message != null) { ?>
+    <?php if ($message != null) { ?>
         <div class="alert alert-success" role="alert" style="text-align: center">
-            <?php echo $update_message ?>
+            <?php echo $message ?>
         </div>
     <?php } ?>
     <div class="main-container">
@@ -88,7 +88,15 @@
                                 <td><?php echo $item["name"] ?></td>
                                 <td><?php echo $item["description"] ?></td>
                                 <td><?php echo $item["extra_info"] ?></td>
-                                <td><i class="fa-solid fa-pen"></i></td>
+                                <td>
+                                    <a href="edit_reference_info.php?id=<?php echo $item['id'] ?>"><i class="fa-solid fa-pen"></i></a>
+                                    <form action="add_reference_info.php" method="POST" style="display: inline;">
+                                        <input type="text" name="type" value="delete" style="display: none;">
+                                        <input type="text" name="table" value="reference" style="display: none;">
+                                        <input type="text" name="delete_id" value="<?php echo $item['id']; ?>" style="display: none;">
+                                        <button type="submit" class="fa-solid fa-trash" style="color: #FF726F; border: none" onclick="return confirm('Are you sure?')"></button>
+                                    </form>
+                                </td>
                             </tr>
                         <?php
                         }

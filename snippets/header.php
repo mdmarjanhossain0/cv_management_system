@@ -6,8 +6,8 @@
             <h1>OpenResume.com</h1>
         </div>
         <ul id="nav_ul">
-            <li><a href="home.php">Home</a></li>
-            <li><a href="contact.php">Contact</a></li>
+            <li><a href="index.php">Home</a></li>
+            <!-- <li><a href="contact.php">Contact</a></li> -->
 
             <?php if ($authenticated) { ?>
                 <li><a href="profile.php">Profile</a></li>
